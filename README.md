@@ -27,7 +27,7 @@ https://www.syntevo.com/smartgit/
 
 https://www.collab.net/downloads/giteye
 
-- Jetpack
+- Jetpack (Nsight Eclipse)
 
 https://developer.nvidia.com/nvidia-sdk-manager
 
@@ -49,6 +49,11 @@ sudo apt install meld
 
 sudo apt install kdiff3
 
+- Pycharm
+
+Fix to install desk executable: 
+
+https://github.com/Pablitinho/Must-have-for-Linux/tree/main/pycharm_add_desk
 
 
 
