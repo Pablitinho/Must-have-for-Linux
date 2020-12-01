@@ -34,13 +34,19 @@ https://developer.nvidia.com/nvidia-sdk-manager
 https://developer.nvidia.com/embedded/jetpack
 
 - Diff Merge
+
 old version (not working on current ubuntu)
+
 https://sourcegear.com/diffmerge/downloaded.php
 
 Alternatives: 
+
 * MeldMerge (http://meldmerge.org/)
+
 sudo apt install meld
+
 * KDiff3 (http://kdiff3.sourceforge.net/)
+
 sudo apt install kdiff3
 
 
