@@ -1,0 +1,32 @@
+
+# Problems with Nsight-Eclipse:
+
+## Error:
+
+!ENTRY com.nvidia.cuda.ide.build 4 0 2020-12-04 11:24:45.564
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: com.nvidia.cuda.ide.build [9]
+  Unresolved requirement: Require-Bundle: org.eclipse.cdt.managedbuilder.core
+    -> Bundle-SymbolicName: org.eclipse.cdt.managedbuilder.core; bundle-version="8.3.0.201409172108"; singleton:="true"
+       org.eclipse.cdt.managedbuilder.core [108]
+         Unresolved requirement: Require-Bundle: org.eclipse.cdt.core; bundle-version="[5.0.0,6.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.cdt.core; bundle-version="5.7.0.nvidia-qualifier"; singleton:="true"
+              org.eclipse.cdt.core [88]
+                Unresolved requirement: Require-Capability: osgi.ee; filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+                
+                
+## Solve:              
+sudo apt install openjdk-8-jdk
+nsight -vm /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
+
+## Error: Change Keyboard Layout
+
+## Solve:
+Preferences->Language Support -> Keyboard input method system -> IBUS
+
+sudo dpkg-reconfigure keyboard-configuration
+
+sudo apt-get install console-common
+sudo dpkg-reconfigure console-data
