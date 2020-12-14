@@ -1,7 +1,7 @@
 
-# Problems with Nsight-Eclipse:
+# Fixes with Jetson :)
 
-## Error:
+## Error: Problems with Nsight-Eclipse:
 
 !ENTRY com.nvidia.cuda.ide.build 4 0 2020-12-04 11:24:45.564
 !MESSAGE FrameworkEvent ERROR
@@ -30,3 +30,18 @@ sudo dpkg-reconfigure keyboard-configuration
 
 sudo apt-get install console-common
 sudo dpkg-reconfigure console-data
+
+## Error: Ubuntu login loop
+
+hen you need to do chown username:username .Xauthority and try logging in (you may also need to do the same for for .ICEauthority).
+
+Else, do ls -ld /tmp. Check for the first 10 letters in the left: they should read exactly so: drwxrwxrwt.
+
+drwxrwxrwt 15 root root 4096 Nov 30 04:17 /tmp
+Else, you need to do sudo chmod a+wt /tmp and check again.
+
+If not both, I'd recommend you either
+
+sudo dpkg-reconfigure lightdm
+or uninstall, reinstall it.
+
