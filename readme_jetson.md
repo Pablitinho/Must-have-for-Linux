@@ -45,3 +45,5 @@ If not both, I'd recommend you either
 sudo dpkg-reconfigure lightdm
 or uninstall, reinstall it.
 
+
+

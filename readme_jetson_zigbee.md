@@ -1,3 +1,9 @@
+## DONT USE THIS ONE
+sudo npm install -g pm2 --unsafe-perm
+pm2 startup
+pm2 start homebridge
+pm2 save
+
 
 # Zigbee usb CC2531 installation
 ## Check that the USB is listed in the system
@@ -16,6 +22,24 @@ test -w /dev/ttyACM0 && echo success || echo failure
 ### If you have failure do:
 sudo usermod -a -G dialout $USER
 sudo chmod a+r+w /dev/ttyACM0
+sudo ls -l /proc/[0-9]/fd/ |grep /dev/ttyACM0
+
+You need to apply this on every reboot. To fix this you can use a ‘udev’ rule:
+
+udevadm info -a -n /dev/ttyACM0 | grep 'serial' get the serial to your device YOURSERIAL
+
+Create the rule file with: 
+
+sudo vi /etc/udev/rules.d/99-usb-serial.rules
+
+add this line: 
+
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0451", ATTRS{idProduct}=="16a8", ATTRS{serial}=="YOURSERIAL", SYMLINK="ttyUSB.CC2531-01", OWNER="jetson"
+
+modify your Zigbee2MQTT config to adjust new SYMLINK name: nano /opt/zigbee2mqtt/data/configuration.yaml
+
+… serial: port: /dev/ttyUSB.CC2531-01 …
+
 
 ###  Apply this on every reboot
 udevadm info -a -n /dev/ttyACM0 | grep 'serial'
@@ -59,8 +83,7 @@ npm ci --production
 
 ### Check if the config file is generated properly
 
-cat /opt/zigbee2mqtt/data/configuration.yaml
-
+C
 ### Add network key
 /opt/zigbee2mqtt/data/configuration.yaml -> Here
 advanced:
@@ -68,6 +91,9 @@ network_key: GENERATE
 
 ### Run Zigbee2MQTT
 sudo npm start
+
+#### if error:
+sudo chmod a+r+w -R data
 
 ### Run as a service
 
@@ -120,11 +146,11 @@ zigbee2mqtt/0x001788010865e72b -> Cuarto
             "name": "PHILIPS Occupancy Studio",
             "topics": {
                 "getOccupancyDetected": {
-                    "topic": "zigbee2mqtt/0x001788010865e72b",
+                    "topic": "zigbee2mqtt/0x001788010865e676",
                     "apply": "return JSON.parse(message).occupancy;"
                 },
                 "getBatteryLevel": {
-                    "topic": "zigbee2mqtt/0x001788010865e72b",
+                    "topic": "zigbee2mqtt/0x001788010865e676",
                     "apply": "return JSON.parse(message).battery;"
                 }
             },
@@ -137,11 +163,11 @@ zigbee2mqtt/0x001788010865e72b -> Cuarto
             "name": "PHILIPS Temperature Studio",
             "topics": {
                 "getCurrentTemperature": {
-                    "topic": "zigbee2mqtt/0x001788010865e72b",
+                    "topic": "zigbee2mqtt/0x001788010865e676",
                     "apply": "return JSON.parse(message).temperature;"
                 },
                 "getBatteryLevel": {
-                    "topic": "zigbee2mqtt/0x001788010865e72b",
+                    "topic": "zigbee2mqtt/0x001788010865e676",
                     "apply": "return JSON.parse(message).battery;"
                 }
             },
@@ -153,14 +179,19 @@ zigbee2mqtt/0x001788010865e72b -> Cuarto
             "name": "PHILIPS Light Intensity Studio",
             "topics": {
                 "getCurrentAmbientLightLevel": {
-                    "topic": "zigbee2mqtt/0x001788010865e72b",
+                    "topic": "zigbee2mqtt/0x001788010865e676",
                     "apply": "return Math.pow(10, (JSON.parse(message).illuminance - 1)/10000);"
                 },
                 "getBatteryLevel": {
-                    "topic": "zigbee2mqtt/0x001788010865e72b",
+                    "topic": "zigbee2mqtt/0x001788010865e676",
                     "apply": "return JSON.parse(message).battery;"
                 }
             },
             "logMqtt": true
         }
+        
+        
+/dev/ttyUSB.CC2531-01
+
+        
 
